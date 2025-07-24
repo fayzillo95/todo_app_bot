@@ -19,6 +19,7 @@ export class BotService implements OnModuleInit {
     this.userTasks = new Map()
     this.userState = new Map()
     const BOT_TOKEN = process.env.BOT_TOKEN || ""
+    console.log(BOT_TOKEN)
     this.bot = new Bot(BOT_TOKEN)
 
     this.bot.command("start", async (ctx: Context) => {
@@ -44,6 +45,8 @@ export class BotService implements OnModuleInit {
 
     setInterval(() => {
       this.userService.notificationData(this.bot)
+      console.log(BOT_TOKEN)
+      console.log("[   ____ SET INTERVAL ISHGA TUSHDI ____ ]")
     }, (1000 * 60));
 
     this.createTask()
