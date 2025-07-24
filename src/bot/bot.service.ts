@@ -5,6 +5,7 @@ import { checkDate, getTodoButtos, getTodoMessage } from "./utils/functions";
 import { InternalMessage, TaskMap, TypeState } from "./utils/helper.types"
 import { UserService } from "./user.service";
 import { StatusTask } from "@prisma/client";
+import { AbortSignal } from "grammy/out/shim.node";
 
 @Injectable()
 export class BotService implements OnModuleInit {
@@ -76,11 +77,14 @@ export class BotService implements OnModuleInit {
           console.log(data)
 
           const id = parseInt(data!.split(":")[1])
-          const task = await this.userService.setStatus(id, { status: StatusTask.COMPLIETED })
+          try {
+            const task = await this.userService.setStatus(id, { status: StatusTask.COMPLIETED })
+            if (!task) return
+            ctx.editMessageText(getTodoMessage(task), getTodoButtos(task))
+          } catch (error) {
+            ctx.deleteMessage()
+          }
 
-          if (!task) return
-
-          ctx.editMessageText(getTodoMessage(task), getTodoButtos(task))
         }
 
       } catch (error) {

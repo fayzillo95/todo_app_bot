@@ -9,6 +9,7 @@ export class BotController {
   @Post("/webhook")
   async handleUpdate(@Req() req: Request) {
     await this.botService.handleUpdate(req.body);
+    console.log(req.body)
     return { ok: true };
   }
 }
