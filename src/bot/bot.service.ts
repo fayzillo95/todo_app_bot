@@ -18,8 +18,8 @@ export class BotService implements OnModuleInit {
   async onModuleInit() {
     this.userTasks = new Map()
     this.userState = new Map()
-    // @ts-ignore
-    this.bot = new Bot(procces.env.BOT_TOKEN)
+    const BOT_TOKEN = process.env.BOT_TOKEN || ""
+    this.bot = new Bot(BOT_TOKEN)
 
     this.bot.command("start", async (ctx: Context) => {
       await this.userService.createNewUser(ctx)
