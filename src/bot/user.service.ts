@@ -15,7 +15,6 @@ export class UserService {
         const oldUser = await this.prisma.user.findFirst({
             where: { userId: ctx.from?.id }
         });
-        console.log(oldUser)
         if (!oldUser && (ctx.from?.id && ctx.message?.chat.id)) {
             try {
                 await this.prisma.user.create({
@@ -49,8 +48,7 @@ export class UserService {
         try {
             const userId = ctx.from?.id
             const taskData = data.get(userId!)
-            console.log(taskData, data)
-            console.log(userId)
+            
             const user = await this.prisma.user.findFirst({ where: { userId: userId } })
             if (!user) return
             const newTask = await this.prisma.task.create({

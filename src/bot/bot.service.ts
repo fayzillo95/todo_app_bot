@@ -24,7 +24,11 @@ export class BotService implements OnModuleInit {
 
     this.bot.command("start", async (ctx: Context) => {
       await this.userService.createNewUser(ctx)
-      await ctx.reply("Asslomu alaykum botimizga hush kelibsiz")
+      await ctx.reply(`
+Assalomu alaykum bo'timizga hush kelibsiz
+/tasks   Todolar ro'yxati
+/add     Yangi todo qo'shish
+        `)
     })
     this.bot.command("tasks", async (ctx: Context) => {
       this.userService.findTodos(ctx)
@@ -75,7 +79,6 @@ export class BotService implements OnModuleInit {
         }
 
         if (data?.includes("belgilash")) {
-          console.log(data)
 
           try {
             const id = parseInt(data!.split(":")[1])
