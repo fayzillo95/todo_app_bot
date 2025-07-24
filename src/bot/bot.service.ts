@@ -171,6 +171,7 @@ export class BotService implements OnModuleInit {
           }, times)
           ctx.reply("Task yaratildi")
           this.userTasks.delete(userId)
+          this.userState.delete(userId)
         }
         return
       }
