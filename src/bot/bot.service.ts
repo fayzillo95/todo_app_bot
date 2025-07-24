@@ -5,7 +5,6 @@ import { checkDate, getTodoButtos, getTodoMessage } from "./utils/functions";
 import { InternalMessage, TaskMap, TypeState } from "./utils/helper.types"
 import { UserService } from "./user.service";
 import { StatusTask } from "@prisma/client";
-import { AbortSignal } from "grammy/out/shim.node";
 
 @Injectable()
 export class BotService implements OnModuleInit {
@@ -49,13 +48,15 @@ export class BotService implements OnModuleInit {
       console.log(BOT_TOKEN)
       console.log("[   ____ SET INTERVAL ISHGA TUSHDI ____ ]")
     }, (1000 * 60));
-    await this.bot.api.setWebhook("https://todo-app-bot.onrender.com/webhook")
+
     this.createTask()
     this.controllAction()
+    await this.bot.init()
 
     this.bot.catch((error: BotError) => {
       console.log(error)
     })
+    await this.bot.start()
 
   }
 
@@ -76,15 +77,15 @@ export class BotService implements OnModuleInit {
         if (data?.includes("belgilash")) {
           console.log(data)
 
-          const id = parseInt(data!.split(":")[1])
           try {
+            const id = parseInt(data!.split(":")[1])
             const task = await this.userService.setStatus(id, { status: StatusTask.COMPLIETED })
             if (!task) return
             ctx.editMessageText(getTodoMessage(task), getTodoButtos(task))
+
           } catch (error) {
             ctx.deleteMessage()
           }
-
         }
 
       } catch (error) {
@@ -180,8 +181,5 @@ export class BotService implements OnModuleInit {
     } catch (error) {
       ctx.reply(InternalMessage)
     }
-  }
-  handleUpdate(update: any) {
-    return this.bot.handleUpdate(update);
   }
 }
