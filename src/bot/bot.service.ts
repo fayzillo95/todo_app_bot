@@ -48,7 +48,7 @@ export class BotService implements OnModuleInit {
       console.log(BOT_TOKEN)
       console.log("[   ____ SET INTERVAL ISHGA TUSHDI ____ ]")
     }, (1000 * 60));
-
+    await this.bot.api.setWebhook("https://todo-app-bot.onrender.com/webhook")
     this.createTask()
     this.controllAction()
     await this.bot.init()
