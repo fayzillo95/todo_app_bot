@@ -95,7 +95,7 @@ export class UserService {
                 const difirencesTime = startTime - hozir
                 if (difirencesTime > 0 && (difirencesTime / 1000) <= (60 * 5) && todo.status !== StatusTask.COMPLIETED) {
                     try {
-                        bot.api.sendMessage(Number(todo.user.chatId), "Assalomu alaykum bu test xabar " + todo.name + ` nomli vazifangizga 5 daqiadan kam vaqt qoldi`, {
+                        bot.api.sendMessage(Number(todo.user.chatId), "Assalomu alaykum bu test xabar " + ` [ ${todo.name} ] nomli vazifangizga 5 daqiadan kam vaqt qoldi`, {
                             reply_markup: {
                                 inline_keyboard: [
                                     [{ text: "delete", callback_data: `delete:${todo.id}` }],
