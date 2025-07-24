@@ -2,7 +2,7 @@ import { OnModuleInit } from "@nestjs/common";
 import { Injectable } from "@nestjs/common";
 import { Bot, BotError, Context } from "grammy";
 import { checkDate, getTodoButtos, getTodoMessage } from "./utils/functions";
-import {InternalMessage, TaskMap, TypeState} from "./utils/helper.types"
+import { InternalMessage, TaskMap, TypeState } from "./utils/helper.types"
 import { UserService } from "./user.service";
 import { StatusTask } from "@prisma/client";
 
@@ -81,7 +81,7 @@ export class BotService implements OnModuleInit {
           const task = await this.userService.setStatus(id, { status: StatusTask.COMPLIETED })
 
           if (!task) return
-          
+
           ctx.editMessageText(getTodoMessage(task), getTodoButtos(task))
         }
 
@@ -161,7 +161,7 @@ export class BotService implements OnModuleInit {
                 const name = result.name
                 const taskId = result.id
                 const task = await this.userService.findOneTaskById(Number(taskId))
-                if(task){
+                if (task) {
                   ctx.reply(`Salom sizning [ ${task.name} ] nomli taskingizning vaqti keldi `)
                 }
               } catch (error) {
@@ -178,5 +178,8 @@ export class BotService implements OnModuleInit {
     } catch (error) {
       ctx.reply(InternalMessage)
     }
+  }
+  handleUpdate(update: any) {
+    return this.bot.handleUpdate(update);
   }
 }
