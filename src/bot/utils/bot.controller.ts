@@ -9,6 +9,12 @@ export class BotController {
 
     @Get("/")
     getChecker() {
+        console.log({
+            ok: true,
+            success: true,
+            statusCode: 200,
+            message: "Bot is alive"
+        })
         return {
             ok: true,
             success: true,
