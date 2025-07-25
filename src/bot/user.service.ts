@@ -105,7 +105,6 @@ export class UserService {
                         console.log(error.message || "Notificationda xatolik !", todo)
                     }
                 } else {
-                    console.log(todo.user.chatId)
                     try {
                         if (todo.status === StatusTask.PENDING && difirencesTime <= 0) {
                             await this.prisma.task.update({
