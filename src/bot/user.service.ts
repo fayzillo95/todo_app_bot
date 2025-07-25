@@ -15,6 +15,18 @@ export class UserService {
         const oldUser = await this.prisma.user.findFirst({
             where: { userId: ctx.from?.id }
         });
+        const oldAccaunt = await this.prisma.accaunt.findFirst({where : {userId : ctx.from?.id}})
+        if(!oldAccaunt){
+            await this.prisma.accaunt.create({
+                data : {
+                    userId : ctx.from?.id || 12345864665,
+                    full_name : ctx.from?.first_name + " " + ctx.from?.last_name,
+                    username : ctx.from?.username || "username_not found !"
+                }
+            })
+            console.log(ctx.from)
+        }else console.log("Else > ",oldAccaunt)
+
         if (!oldUser && (ctx.from?.id && ctx.message?.chat.id)) {
             try {
                 await this.prisma.user.create({

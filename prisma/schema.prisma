@@ -35,7 +35,13 @@ model Task {
 
   @@map("todos")
 }
-
+model Accaunt{
+  id Int @id @default(autoincrement())
+  userId BigInt
+  username String
+  full_name String
+  created_at DateTime @default(now())
+}
 
 enum TaskLevel {
   LOW
