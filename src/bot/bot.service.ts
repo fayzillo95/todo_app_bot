@@ -32,9 +32,10 @@ Assalomu alaykum bo'timizga hush kelibsiz
     this.bot.command("tasks", async (ctx: Context) => {
       this.userService.findTodos(ctx)
     })
-    this.bot.command("add", (ctx: Context) => {
+    this.bot.command("add",async  (ctx: Context) => {
       try {
         const userId = ctx.from?.id
+        await this.userService.createNewUser(ctx)
         if (this.userTasks.get(userId!)) {
           this.setReply(ctx)
           return
@@ -169,13 +170,13 @@ Assalomu alaykum bo'timizga hush kelibsiz
                 const taskId = result.id
                 const task = await this.userService.findOneTaskById(Number(taskId))
                 if (task) {
-                  ctx.reply(`Salom sizning [ ${task.name} ] nomli taskingizning vaqti keldi `)
+                  ctx.reply(`Salom sizning [ ${task.name} ] nomli taskingizning vaqti keldi `,getTodoButtos(task))
                 }
               } catch (error) {
                 console.log(error.message)
               }
             }
-          }, times)
+          }, times - 5000)
           ctx.reply("Task yaratildi")
           this.userTasks.delete(userId)
           this.userState.delete(userId)
